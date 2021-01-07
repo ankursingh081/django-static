@@ -26,7 +26,9 @@ SECRET_KEY = '2o_mk)nw6mem_s+zu9%6t@0can-&%7j-laz@fr0bq&z@2v&wf!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'a4d-devbda-webapp-mvp906-01.azurewebsites.net',
+]
 
 
 # Application definition
