@@ -1,0 +1,152 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+<div style="display:flex; flex-direction:row; margin-bottom:30px; margin-left:12px;">
+    <div style="margin: 0 5px ;">
+        <span style="font-size: 12px; padding-left: 5px; font-weight: bold;">  Assign Date</span>
+        <input type="date" class="form-control form-control-sm" name="assign_date" value="{{ values.assign_date }}" style="height:28px; width:135px">
+    </div>
+    <div style="margin: 0 5px;">
+        <span style="font-size: 12px; padding-left: 5px; font-weight: bold;">Active Area</span>
+        <select class="form-control" style="height: 30px; width: 130px; font-size: 12px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+        </select>
+    </div>
+    <div style="margin: 0 5px ;">
+        <span style="font-size: 12px; padding-left: 5px; font-weight: bold;">Council</span>
+        <select class="form-control" style="height: 30px; width: 130px; font-size: 12px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+        </select>
+    </div>        
+    <div style="margin: 0 5px ;">
+        <span style="font-size: 12px; padding-left: 5px; font-weight: bold;">PT</span>
+        <select class="form-control" style="height: 30px; width: 130px; font-size: 12px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+        </select>
+    </div>
+    <div >
+        <a class="nav-item nav-link" href="#"><img src="{% static 'blog/images/filter-remove.png' %}" alt="X" width="20" height="20" style="margin-top:20px"></a>
+    </div>
+</div>
+
+    <div class="container">
+        <table class="table table-stripped table-hover">
+            <thead>
+                <tr style="font-size: 12px;">
+                    <th>Task</th>
+                    <th>Assigned To</th>
+                    <th>Active Area</th>
+                    <th>Council</th>
+                    <th>PT</th>
+                    <th>Status</th>
+                    <th>Assigned Date</th>
+                    <th>End Date</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details %}
+                <tr style="font-size: 12px;">
+                    <td style="padding-top: 11px;">{{detail.task}}</td>
+                    <td style="padding-top: 11px;">{{detail.assign_to}}</td>
+                    <td style="padding-top: 11px;"></td>
+                    <td style="padding-top: 11px;"></td>
+                    <td style="padding-top: 11px;"></td>
+                    <td style="padding-top: 11px;">{{detail.status}}</td>
+                    <td style="padding-top: 11px;">{{detail.assign_date}}</td>
+                    <td style="padding-top: 11px;">May 15, 2021</td>
+                    <td style="padding-top: 11px;">Others</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if details.has_other_pages %}
+        <div style="font-size: 11px; margin-bottom: 120px; margin-left: 5px; position: fixed; bottom:0;">
+            <ul class="pagination">
+                {% if details.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ details.previous_page_number }}" class="page-link">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">&laquo;</a>
+                    </li>
+                {% endif %}
+                {% for i in details.paginator.page_range %}
+                    {% if details.number == i %}
+                        <li class="page-item active">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if details.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ details.next_page_number }}" class="page-link">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="?page={{ i }}" class="page-link">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}
+
+{% block contents %}
+<h4 style="text-align: center; margin-bottom: 34px; padding-top: 5px;">Task Description</h4>
+<hr >
+<div class="container">
+    <p class='text-muted' style="margin-top:-12px;font-size: 14px; margin-left: -10px;">Task</p>
+</div>
+<div style="display:flex; flex-direction:row;">
+    <div class="container">
+        <p class='text-muted' style="margin-top: 4px;font-size: 14px; margin-left: -9px;">Area</p>
+    </div>
+    <div class="container" style="margin-left: -40px;">
+        <p class='text-muted' style="margin-top: 4px; margin-left: -10px;font-size: 14px;">Council</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <p class='text-muted' style="margin-top: 5px;font-size: 14px; margin-left: -9px;">PT Number</p>
+        </div>
+        <div class="col-sm">
+            <p class='text-muted' style="margin-top: 5px;margin-left: -29px;font-size: 14px;">Total Affected CPEs</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <p class='text-muted' style="margin-top: 5px;font-size: 14px; margin-left: -9px;">Number of DTC Envolved</p>
+</div>
+{% endblock contents %}
+
+{% block bottom-nav %}
+{% load static %}
+<div style="margin-left: 90px;">
+    <a class="nav-item nav-link" href="{% url 'task-chart' %}"><img src="{% static 'blog/images/home_icon.png' %}" alt="LIST" width="20" height="20" style="margin-bottom: 6px; margin-right: 4px;">Home</a>
+</div>
+<div style="margin-left: 0 0px;">
+    <a class="nav-item nav-link" href="{% url 'blog-home' %}"><img src="{% static 'blog/images/burgrer.png' %}" alt="LIST" width="20" height="20" style="margin-bottom: 3px; margin-right: 4px;">Outage List</a>
+</div>
+<div style="margin: 0 0px ;">
+    <a class="nav-item nav-link selected" href="{% url 'user-home' %}"><img src="{% static 'blog/images/burgrer.png' %}" alt="LIST" width="20" height="20" style="margin-bottom: 3px; margin-right: 4px;">My Tasks</a>
+</div>
+{% endblock bottom-nav %}

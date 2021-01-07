@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h2>You are already logged in. Please return to <a href="{% url 'blog-home' %}">Home</a></h2>
+    {% else %}
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Log In</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock content %}

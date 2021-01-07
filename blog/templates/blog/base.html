@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}"
+
+    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>{% block title %}{% endblock title %}</title>
+
+</head>
+<body style="margin-top:0px;">
+    <header class="site-header">
+      <div class = 'outer-div' style="display:flex; flex-direction:row; background-color: whitesmoke;">
+        <div class = 'left-content' style="margin-left: 100px ;margin-right: 130px;">
+          <div style="padding-top: 8px;">
+            <span style="font-size: 20px; display:flex; flex-direction:row;"><img src="{% static 'blog/images/edp_logo.png' %}" alt="EDP" width="40" height="30" style="margin-top: 5px;">    <h3 style="padding-left: 4px;">|</h3> <h5 style="padding-left: 4px;padding-top:7px;">Outage Force Field Management</h5></span>
+          </div>
+        </div>
+        <div class = 'right-content' style="display:flex; flex-direction:row;">
+          <div class="triangle-topright">
+          </div>
+          <div style="display:flex; flex-direction:row; background-color:#3c7b73;padding-left: 25.5rem; padding-right: 5.5rem; padding-top: 7px;">
+            {% if user.is_authenticated %}
+            <div style="margin-right: -25px; margin-left: 5px; padding-left: 0px;">
+              <a class="nav-item nav-link" href="{% url 'task-chart' %}" style="color: whitesmoke;">{{request.user.username}}</a>
+            </div>
+              <div class="dropdown" style="padding-left: 10px;">
+                <img src="{% static 'blog/images/noprofilepic.png' %}" alt="EDP" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="60" height="45" style="background-color: #3c7b73; border-color: #3c7b73; padding-top: 3px; margin-left: 5px;">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main role="main" class="container">
+      <div class="row" style="margin-top: 25px;">
+        <div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+          {% endif %}
+          {% block scripts %}{% endblock scripts %}
+          {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-section" style="margin-top: 8px;">
+            {% block contents %}{% endblock contents %}
+          </div>
+        </div>
+      </div>
+      <div class="navbar-brand mr-auto fixed-bottom" style="display:flex; flex-direction:row; background-color:whitesmoke; padding:0%">
+        {% block bottom-nav %}
+        {% endblock bottom-nav %}
+        
+      </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

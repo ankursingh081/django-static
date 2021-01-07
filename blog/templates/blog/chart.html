@@ -1,0 +1,92 @@
+{% extends "blog/chart_base.html" %}
+
+{% block title %}Tasks{% endblock title %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        var ctxa = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctxa, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["Other", "False Positive", "Fixed"],
+                datasets: [{
+                    label: 'Status Assignment',
+                    data: [{% for item in qs %}'{{item.count}}',{% endfor %}],
+                    backgroundColor: 'rgba(31, 160, 224, 1)',
+                    borderColor: 'rgba(31, 160, 224, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        var ctx = document.getElementById('myCharts').getContext('2d');
+        var myCharts = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["ToDo", "InProgress", "Done"],
+                datasets: [{
+                    label: 'Tasks Status',
+                    data: [{% for item in qs %}'{{item.count}}',{% endfor %}],
+                    backgroundColor: 'rgba(31, 160, 224, 0.5)',
+                    borderColor: 'rgba(31, 160, 224, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+{% endblock scripts %}
+
+{% block content %}
+    <div style="display:flex; flex-direction:row;">
+        <div style="margin-right:40px">
+            <canvas id="myCharts" width="300" height="300 "></canvas>
+        </div>
+        <div>
+            <canvas id="myChart" width="400" height="300 "></canvas>
+        </div>
+    </div>     
+{% endblock content %}
+
+{% block sidebar %}
+    {% if details.count %}
+    <table class="table table-stripped table-hover" style="margin-top:20px;">
+        <thead>
+            <tr style="font-size: 15px;">
+                <th class="data-left">Task</th>
+                <th class="data-right">Assigned Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in details %}
+            <tr style="font-size: 12px;">
+                <td class="data-left">{{detail.task}}</td>
+                <td class="data-right">{{detail.assign_date}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock sidebar %}
